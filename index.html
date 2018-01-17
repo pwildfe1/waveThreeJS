@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>SOLE CUSTOMIZER</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background-color: #1e1e1e;
+				margin: 0;
+				overflow: hidden;
+			}
+		</style>
+
+	</head>
+	<body>
+
+		<!-- shader -->
+		<script type="x-shader/x-vertex" id="vertexshader">
+			uniform float amplitude;
+			attribute float size;
+			attribute vec3 customColor;
+			varying vec3 vColor;
+			void main() {
+				vColor = customColor;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_PointSize = size * ( 300.0 / -mvPosition.z );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+		</script>
+		<script type="x-shader/x-fragment" id="fragmentshader">
+			precision highp float;
+
+			uniform vec3 color;
+			uniform sampler2D texture;
+			varying vec3 vColor;
+			void main() {
+				gl_FragColor = vec4( color * vColor, 1.0 );
+				gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+			}
+		</script>
+
+
+
+		<!-- supporting modules -->
+		<script src="src/three.min.js"></script>
+		<script src="src/PLYLoader_Quad.js"></script>
+		<script src="src/OBJLoader.js"></script>
+		<script src="src/STLBinaryExport.js"></script>
+		<script src="src/attractor.js"></script>
+		<script src="src/jquery-1.12.2.min.js"></script>
+
+		<!-- front-end libraries -->
+
+		<script src="src/frontEnd/FileSaver.js"></script>
+		<script src="src/frontEnd/dat.gui.min.js"></script>
+		<script src="src/frontEnd/stats.min.js"></script>
+		<script src="src/frontEnd/colors.js"></script>
+		<script src="src/frontEnd/environment.js"></script>
+		<script src="src/frontEnd/threejsSetup.js"></script>
+		<script src="src/frontEnd/bufferGeometry.js"></script>
+		<script src="src/frontEnd/OrbitControls.js"></script>
+		<script src="src/frontEnd/jquery-1.12.2.min.js"></script>
+
+
+		<!-- main program -->
+		<script src="matrixAlgebra.js"></script>
+		<script src="cymatic.js"></script>
+		<script src="sourcePts.js"></script>
+		<script src="main.js"></script>
+
+		<!-- shader -->
+		<script type="x-shader/x-vertex" id="vertexshader">
+			uniform float amplitude;
+			attribute float size;
+			attribute vec3 customColor;
+			varying vec3 vColor;
+			void main() {
+				vColor = customColor;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_PointSize = size * ( 300.0 / -mvPosition.z );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentshader">
+			precision highp float;
+
+			uniform vec3 color;
+			uniform sampler2D texture;
+			varying vec3 vColor;
+			void main() {
+				gl_FragColor = vec4( color * vColor, 1.0 );
+				gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+			}
+		</script>
+
+
+		<div id="myProgress">
+			<div id="myBar"></div>
+		</div>
+
+		<div id = 'log'></div>
+
+
+
+		<script>
+
+
+            var myBar = document.getElementById('myBar');
+            myBar.style.width = '0%';
+
+            var myLog = document.getElementById('log');
+
+
+
+
+		</script>
+
+
+		<script>
+
+
+            init();
+
+
+
+            animate();
+
+
+		</script>
+
+	</body>
+</html>
